@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>영상 방식 테스트</title>
+  <style>
+    :root {
+      --bg: #f3f3f3;
+      --surface: #ffffff;
+      --text: #111111;
+      --muted: #666666;
+      --line: #e5e5e5;
+      --black: #111111;
+      --blue: #1a73e8;
+      --max: 430px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+    }
+
+    body {
+      padding: 16px 12px 40px;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+    .intro {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .card {
+      margin-bottom: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .title {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .desc {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .media {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000000;
+    }
+
+    iframe.media,
+    video.media,
+    img.media {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    video.media {
+      object-fit: cover;
+    }
+
+    .launch {
+      position: relative;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.34) 100%);
+      border-radius: 14px;
+    }
+
+    .play {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.74);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+      position: relative;
+    }
+
+    .play::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-35%, -50%);
+      border-top: 13px solid transparent;
+      border-bottom: 13px solid transparent;
+      border-left: 20px solid #ffffff;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid var(--black);
+      color: var(--black);
+      background: #ffffff;
+    }
+
+    .btn.primary {
+      background: var(--blue);
+      color: #ffffff;
+      border-color: var(--blue);
+    }
+
+    .status {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .fake-player {
+      position: relative;
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .label {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f1f1f1;
+      color: #444444;
+      font-size: 11px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>영상 방식 테스트</h1>
+    <p class="intro">같은 페이지 안에서 어떤 방식이 실제 환경에서 되는지 비교하는 테스트입니다. 모바일 기준 16:9로 맞췄고, 각각 동작 여부만 보면 됩니다.</p>
+
+    <section class="card">
+      <p class="title">1. 유튜브 기본 iframe</p>
+      <p class="desc">가장 일반적인 방식입니다. 환경에 따라 `153`이 날 수 있습니다.</p>
+      <iframe
+        class="media"
+        src="https://www.youtube.com/embed/ATA1WvLXYVw?autoplay=0&playsinline=1&rel=0&controls=1"
+        title="유튜브 기본 iframe"
+        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </section>
+
+    <section class="card">
+      <p class="title">2. 유튜브 nocookie iframe</p>
+      <p class="desc">쿠키 관련 제약을 줄이는 방식입니다. 기본 iframe보다 나은 경우가 있습니다.</p>
+      <iframe
+        class="media"
+        src="https://www.youtube-nocookie.com/embed/ATA1WvLXYVw?autoplay=0&playsinline=1&rel=0&controls=1"
+        title="유튜브 nocookie iframe"
+        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </section>
+
+    <section class="card">
+      <p class="title">3. 클릭 후 iframe 생성</p>
+      <p class="desc">처음부터 iframe을 만들지 않고, 플레이를 눌렀을 때만 삽입합니다. `153` 가능성을 줄이는 쪽입니다.</p>
+      <button type="button" class="launch" id="lazyYoutube" aria-label="유튜브 지연 로드 재생">
+        <img class="media" src="https://img.youtube.com/vi/ATA1WvLXYVw/maxresdefault.jpg" alt="유튜브 썸네일">
+        <span class="overlay" aria-hidden="true"><span class="play"></span></span>
+      </button>
+      <div class="status">플레이를 누르면 현재 페이지 안에서 iframe이 생성됩니다.</div>
+    </section>
+
+    <section class="card">
+      <p class="title">4. 유튜브 직접 링크</p>
+      <p class="desc">같은 페이지 안 재생은 아니지만, 실제로는 가장 잘 열리는 방식입니다.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://youtu.be/ATA1WvLXYVw?si=9W5l0NC4ToN1BCnJ" target="_blank" rel="noopener noreferrer">유튜브 열기</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <p class="title">5. 같은 탭 이동</p>
+      <p class="desc">재생 버튼을 누르면 현재 탭에서 바로 유튜브로 넘어갑니다. 가장 현실적인 대체 방식입니다.</p>
+      <a class="fake-player" href="https://youtu.be/ATA1WvLXYVw?si=9W5l0NC4ToN1BCnJ">
+        <img class="media" src="https://img.youtube.com/vi/ATA1WvLXYVw/maxresdefault.jpg" alt="같은 탭 유튜브 이동">
+        <span class="overlay" aria-hidden="true"><span class="play"></span></span>
+      </a>
+      <span class="label">현재 탭 이동</span>
+    </section>
+
+    <section class="card">
+      <p class="title">6. 유튜브 앱 스킴 시도</p>
+      <p class="desc">유튜브 앱이 있으면 앱으로 열릴 수 있고, 없으면 실패하거나 브라우저로 처리됩니다.</p>
+      <div class="actions">
+        <a class="btn" href="vnd.youtube://ATA1WvLXYVw">유튜브 앱 열기</a>
+        <a class="btn" href="intent://www.youtube.com/watch?v=ATA1WvLXYVw#Intent;package=com.google.android.youtube;scheme=https;end">안드로이드 intent</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <p class="title">7. mp4 직접 재생</p>
+      <p class="desc">가장 안정적인 현재 페이지 재생 방식입니다.</p>
+      <video class="media" autoplay muted loop playsinline controls preload="metadata">
+        <source src="https://image.chungho.com/main-manage/0aee7123-dc4e-471e-a1b7-a08bf8974d28.mp4" type="video/mp4">
+      </video>
+    </section>
+  </div>
+
+  <script>
+    const lazyYoutube = document.getElementById("lazyYoutube");
+
+    if (lazyYoutube) {
+      lazyYoutube.addEventListener("click", function () {
+        const iframe = document.createElement("iframe");
+        iframe.className = "media";
+        iframe.src = "https://www.youtube-nocookie.com/embed/ATA1WvLXYVw?autoplay=1&mute=1&playsinline=1&rel=0&controls=1";
+        iframe.title = "지연 로드 유튜브";
+        iframe.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+        iframe.allowFullscreen = true;
+        lazyYoutube.replaceWith(iframe);
+      });
+    }
+  </script>
+</body>
+</html>
